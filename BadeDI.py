@@ -64,14 +64,14 @@ try:
 
 
 
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into productos
                      values ( 1, 'patata', 0.25)""")
 
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into productos
                      values ( 2, 'melon', 2.35)""")
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into productos
                      values ( 3, 'nocilla', 3.25)""")
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into productos
                      values ( 4, 'lentejas', 0.80)""")
 
 
@@ -79,7 +79,7 @@ try:
 
 
 except dbapi.DatabaseError as e:
-    print("Erro insertando os datos en clientes: " + str(e))
+    print("Erro insertando os datos en productos: " + str(e))
 
 try:
 
@@ -96,13 +96,13 @@ try:
 
 
 
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into ventas
                      values ( 1, 'patata', 150)""")
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into ventas
                      values ( 2, 'melon', 150)""")
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into ventas
                      values ( 3, 'nocilla', 150)""")
-    cursor.execute("""insert into clientes
+    cursor.execute("""insert into ventas
                      values ( 4, 'lentejas', 150)""")
 
 
@@ -112,7 +112,7 @@ try:
 
 
 except dbapi.DatabaseError as e:
-    print("Erro insertando os datos en clientes: " + str(e))
+    print("Erro insertando os datos en ventas: " + str(e))
 
 
 
@@ -125,7 +125,7 @@ except dbapi.DatabaseError as e:
             print("DNI: " + fila[0])
             print("Nome: " + fila[1])
             print("Apellidos: " + fila[2])
-            print("Telefono: " + str(fila[3]))
+            print("Referencia: " + str(fila[3]))
             print("Deuda: " + str(fila[4]))
 
 
@@ -146,8 +146,89 @@ except dbapi.DatabaseError as e:
         print("Consulta executada")
         baseconexion.commit()
 
+
+
+
+
+
+
+    try:
+     cursor.execute("select * from productos")
+        # fetchone a seguinte tupla
+        # fetchall devolta un obxecto iterable con todalas tuplas
+        # fetcmany numero de tuplas pasado por parametro
+     for fila in cursor.fetchall():
+            print("Referencia: " + str(fila[0]))
+            print("Nome: " + fila[1])
+            print("PVP: " + str(fila[2]))
+
+
+    except dbapi.DatabaseError as e:
+        print("Erro facendo a consulta: " + str(e))
+    else:
+        print("Consulta executada")
+        Nome= input("Introduce el nombre del producto")
+    try:
+        consulta = "select * from productos where nome= ?"
+        """print(consulta)"""
+        cursor.execute(consulta,(Nome,))
+        for rexistro in cursor.fetchall():
+            print(rexistro)
+    except dbapi.DatabaseError as e:
+        print("Erro facendo a consulta: " + str(e))
+    else:
+        print("Consulta executada")
+        baseconexion.commit()
+
+
+
+
+        try:
+            cursor.execute("select * from ventas")
+            # fetchone a seguinte tupla
+            # fetchall devolta un obxecto iterable con todalas tuplas
+            # fetcmany numero de tuplas pasado por parametro
+            for fila in cursor.fetchall():
+                print("Referencia: " + str(fila[0]))
+                print("Nome: " + fila[1])
+                print("Cantidad: " + str(fila[2]))
+
+
+        except dbapi.DatabaseError as e:
+            print("Erro facendo a consulta: " + str(e))
+        else:
+            print("Consulta executada")
+            Nome = input("Introduce el nombre del producto provedor")
+        try:
+            consulta = "select * from ventas where nome= ?"
+            """print(consulta)"""
+            cursor.execute(consulta, (Nome,))
+            for rexistro in cursor.fetchall():
+               print(rexistro)
+        except dbapi.DatabaseError as e:
+            print("Erro facendo a consulta: " + str(e))
+        else:
+            print("Consulta executada")
+            baseconexion.commit()
+
+
+
+
+
+
+
 else:
-    print ("Base de datos creada")
+ print ("Bases de datos creadas")
+
+
+
+
+
+
+
+
+
+
 
 finally:
     cursor.close()

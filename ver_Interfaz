@@ -4,31 +4,39 @@ from conexionBD import ConexionBD
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk
 class clase():
-    def __init__(self):
+    def __init__(ingresar):
         builder = Gtk.Builder()
-        builder.add_from_file ("INTERFAZ DI.glade")
-        sinais = {"on_btnClase_clicked": self.on_btnClase_clicked,
-                  "on_txtClase_activate": self.on_btnClase_clicked,
-                  "on_winClase_delete_event": Gtk.main_quit}
+        builder.add_from_file ("INTERFAZDI.glade")
+        sinais = {"on_ingresarcli_clicked": ingresar.on_ingresarcli_clicked,
+                  "on_txtdni_activate": ingresar.on_txtdni_activate,
+                  "on_txtnombre_activate" : ingresar.on_txtnombre_activate,
+                  "on_txtapellidos_activate" : ingresar.on_txtapellidos_activate,
+                  "on_txttelefono_activate" : ingresar.on_txttelefono_activate,
+                  "on_txtdeuda_activate" : ingresar.on_txtdeuda_activate,
+                  "on_ingresarcli_delete_event": Gtk.main_quit}
+
         builder.connect_signals(sinais)
+        VentanaDatos = builder.get_object("VentanaDatos")
+        VentanaDatos.show_all()
+
+    def on_ingresarcli_clicked(ingresar, boton):
+            dni= ingresar.txtdni.get_text()
+            nom=ingresar.txtnombre.get_text()
+            ape=ingresar.txtapellidos.get_txt()
+            tel=ingresar.txttlefono.get_txt()
+            deu=ingresar.txtdeuda.get_txt()
+            print(dni,nom,ape,tel,deu)
+            baseDatos = ConexionBD("baseDI.dat")
 
 
 
-        self.txtSaudo = builder.get_object("txtClase")
-        self.lblSaudo = builder.get_object("lblClase")
 
-    def on_btnClase_clicked(self, boton):
-        Identificador = self.txtClase.get_text()
-        print(Identificador)
-        baseDatos = ConexionBD("Tienda.dat")
-        listaClientes = baseDatos.consultaConParametros("SELECT Identificador FROM Clientes WHERE Identificador=?, Identificador")
-        if listaClientes != 0:
-            self.lblClase.set_text("El cliente " + listaClientes[0][0] + " esta")
-            self.txtClase.set_text("")
-        else:
-            self.lblSaudo.set_text("El cliente " + listaClientes + "no esta")
-    def on_txtClase_activate(self,cadroTexto):
-        self.on_btnClase_clicked(cadroTexto)
+
+
+
+
+
+
 
 if __name__ == "__main__":
     clase()
