@@ -1,0 +1,35 @@
+import gi
+import conexionBD
+from conexionBD import ConexionBD
+gi.require_version("Gtk","3.0")
+from gi.repository import Gtk
+class clase():
+    def __init__(self):
+        builder = Gtk.Builder()
+        builder.add_from_file ("INTERFAZ DI.glade")
+        sinais = {"on_btnClase_clicked": self.on_btnClase_clicked,
+                  "on_txtClase_activate": self.on_btnClase_clicked,
+                  "on_winClase_delete_event": Gtk.main_quit}
+        builder.connect_signals(sinais)
+
+
+
+        self.txtSaudo = builder.get_object("txtClase")
+        self.lblSaudo = builder.get_object("lblClase")
+
+    def on_btnClase_clicked(self, boton):
+        Identificador = self.txtClase.get_text()
+        print(Identificador)
+        baseDatos = ConexionBD("Tienda.dat")
+        listaClientes = baseDatos.consultaConParametros("SELECT Identificador FROM Clientes WHERE Identificador=?, Identificador")
+        if listaClientes != 0:
+            self.lblClase.set_text("El cliente " + listaClientes[0][0] + " esta")
+            self.txtClase.set_text("")
+        else:
+            self.lblSaudo.set_text("El cliente " + listaClientes + "no esta")
+    def on_txtClase_activate(self,cadroTexto):
+        self.on_btnClase_clicked(cadroTexto)
+
+if __name__ == "__main__":
+    clase()
+    Gtk.main()
