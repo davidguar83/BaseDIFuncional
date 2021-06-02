@@ -29,6 +29,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <signal name="clicked" handler="on_ingresarcli_clicked" swapped="no"/>
+                    <signal name="delete-event" handler="on_ingresarcli_delete_event" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left_attach">3</property>

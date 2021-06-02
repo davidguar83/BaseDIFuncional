@@ -124,3 +124,6 @@ class ConexionBD:
             print("Consulta executada")
             return listaConsulta
 
+
+
+
