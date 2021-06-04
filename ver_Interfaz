@@ -19,6 +19,9 @@ class clase():
         VentanaDatos = builder.get_object("VentanaDatos")
         VentanaDatos.show_all()
 
+
+
+
     def on_ingresarcli_clicked(self, boton):
             dni = self.txtdni.get_text()
             nom = self.txtnombre.get_text()
